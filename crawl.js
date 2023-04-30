@@ -8,9 +8,19 @@ function getURLsFromHTML(htmlBody, baseURL) {
 
   for (linkElement of linkElements) {
     if (linkElement.href.slice(0, 1) == "/") {
-        urls.push(`${baseURL}${linkElement.href}`)
+      try {
+        const urlObj = new URL(`${baseURL}${linkElement.href}`);
+        urls.push(urlObj.href);
+      } catch (error) {
+        console.log(`Error parsing URL: ${baseURL}${linkElement.href}`);
+      }
     } else {
-      urls.push(linkElement.href);
+      try {
+        const urlObj = new URL(linkElement.href);
+        urls.push(urlObj.href);
+      } catch (error) {
+        console.log(`Error parsing URL: ${baseURL}${linkElement.href}`);
+      }
     }
   }
   return urls;
