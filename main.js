@@ -13,7 +13,11 @@ async function main() {
   const baseURL = process.argv[2];
 
   console.log(`Starting crawl of ${baseURL}`);
-  await crawlPage(baseURL);
+  const pages = await crawlPage(baseURL, baseURL, {});
+
+  for (const page of Object.entries(pages)) {
+    console.log(`${page}: ${pages[page]}`);
+  }
 }
 
 main();
